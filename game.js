@@ -10,7 +10,7 @@ const LANGUAGES = {
         LIVES: 'ЖИЗНИ',
         START_TEST: 'НАЧАТЬ ТЕСТ',
         TRAINING: 'ТРЕНИРОВКА',
-        USE_WASD: 'Управление: WASD или стрелки — движение. Клик/тап — выстрел.',
+        USE_WASD: 'Управление: WASD или стрелки — движение. Клик/тап — выстрел. \n Escape - выход в меню.',
         TEST_INSTRUCTIONS: 'Инструкция к тесту',
         INSTRUCTION_TEXT: 'Стреляйте по всем цветным объектам на экране.',
         BEGIN_TEST: 'Начать тест',
@@ -261,7 +261,7 @@ let autoShootCooldown = 0;
 let historyData = [];
 
 // --- Controls ---
-let keys = { w: false, a: false, s: false, d: false, up: false, left: false, right: false, down: false };
+let keys = { w: false, a: false, s: false, d: false, up: false, left: false, right: false, down: false, escape: false };
 let touchStartX = 0, touchStartY = 0, touchJoystickActive = false;
 let virtualJoystickPos = { x: 0, y: 0 };
 let lastTouchTime = 0, isShooting = false, shootingDirection = { x: 0, y: 0 };
@@ -369,6 +369,16 @@ class Player {
         if (keys.a || keys.left) this.x -= speed;
         if (keys.s || keys.down) this.y += speed;
         if (keys.d || keys.right) this.x += speed;
+        if (keys.escape) {
+            // Pause game or show menu
+            cancelAnimationFrame(animationId);
+            flagGameOver = true;
+            testActive = false;
+            
+            // Hide the start game modal
+            modalEL.style.display = "flex";
+            keys.escape = false; // Reset escape key
+        }
         
         // Handle touch joystick movement
         if (touchJoystickActive) {
@@ -1709,6 +1719,7 @@ addEventListener('keydown', (event) => {
         case 'arrowleft': keys.left = true; break;
         case 'arrowdown': keys.down = true; break;
         case 'arrowright': keys.right = true; break;
+        case 'escape': keys.escape = true; break;
     }
 });
 
