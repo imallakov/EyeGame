@@ -1593,7 +1593,7 @@ function initColorLegend() {
 function initTimer() {
     timerContainer = document.createElement('div');
     timerContainer.className = 'fixed text-white text-base mr-2 mt-1 select-none';
-    timerContainer.style.right = '10px';
+    timerContainer.style.right = '100px';
     timerContainer.style.top = '10px';
     timerContainer.style.zIndex = '51';
     timerContainer.innerHTML = `<span id="timerTitle">${t('TIME')}: </span>`;
@@ -1909,6 +1909,7 @@ function initGame() {
     document.getElementById('showHistoryBtn').addEventListener('click', showHistory);
     closeResultsBtn.addEventListener('click', () => {
         resultsModal.classList.remove('visible');
+        modalEL.style.display = "flex";
     });
     
     // Print button
